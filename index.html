@@ -1,0 +1,184 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TMS Global | Track Your Parcel</title><link rel="stylesheet" href="site.css"></head><body>
+<header><div class="wrap nav"><a href="/"><img src="logo.png" alt="TMS Global"></a><button class="mobile-menu" type="button" onclick="toggleMenu()" aria-label="Open menu">☰</button><nav id="mainNav"><a href="#tracking">Track</a><a href="#calculator">Weight</a><a href="#send-check">Can I Send?</a><a href="#item-request">Send Items</a><a href="#trust-reviews">Reviews</a><a class="cta" href="#item-request">Get a Quote</a></nav></div></header>
+<section class="hero"><div class="wrap hero-grid"><div><small>TMS GLOBAL INTERNATIONAL COURIER SERVICE</small><h1>Track your parcel.<br><em>Know where it is.</em></h1><p>International courier tracking, chargeable-weight calculation and customer support in one place.</p>
+<div class="hero-box"><b>TRACK YOUR PARCEL</b><div><input id="hAwb" placeholder="Enter AWB / tracking number"><button onclick="heroTrack()">Track Now →</button></div></div>
+<a class="secondary" href="#calculator">⚖ Know Your Chargeable Weight →</a></div><div class="visual"><div class="badge">✈ INTERNATIONAL</div><div class="ship"><span>● Shipment tracking <b>LIVE</b></span><h2>In Transit</h2><p>India → Destination</p><hr><div>Booked　━━━━　In Transit　━━━━　Delivered</div></div></div></div></section>
+<section class="trust-strip"><div class="wrap trust-strip-grid"><div><b>FREE PICKUP &amp; PACKING</b><span>Ask about availability</span></div><div><b>SAME-DAY DISPATCH</b><span>Subject to cutoff &amp; service</span></div><div><b>ON-THE-SPOT TRACKING</b><span>Get your AWB after handover</span></div><div><b>PERSONAL SUPPORT</b><span>WhatsApp your shipment details</span></div></div></section>
+<section class="quick"><div class="wrap q"><a href="#tracking"><b>⌁ Track your parcel</b><span>Check shipment status →</span></a><a href="#calculator"><b>⚖ Know chargeable weight</b><span>Actual vs volumetric →</span></a><a href="#contact"><b>✉ Ask TMS Global</b><span>Quote or shipment support →</span></a></div></section>
+<section class="section" id="tracking"><div class="wrap"><small>SHIPMENT TRACKING</small><h2>Track your shipment</h2><div class="panel form3"><input id="awb" placeholder="AWB / tracking number"><button onclick="track()">Track Shipment →</button></div><div id="trackResult"></div></div></section>
+<section class="section gray" id="calculator"><div class="wrap two"><div><small>KNOW YOUR CHARGEABLE WEIGHT</small><h2>Calculate before you ship.</h2><p>Compare actual and volumetric weight before requesting a quote.</p><div class="formula">Volumetric Weight = <b>L × W × H ÷ Divisor</b><small>Default divisor: 5000</small></div></div><div class="panel"><div class="row"><label>Pieces<input id="pieces" value="1" type="number"></label><label>Actual kg / piece<input id="actual" value="2" type="number" step=".01"></label></div><div class="row"><label>Length cm<input id="length" value="30" type="number"></label><label>Width cm<input id="width" value="20" type="number"></label><label>Height cm<input id="height" value="15" type="number"></label></div><div class="row"><label>Destination<select id="destination"><option>Canada</option><option>USA</option><option>United Kingdom</option><option>Australia</option><option>UAE</option></select></label><label>Carrier<select id="qcarrier"><option>DHL</option><option>FedEx</option><option>UPS</option></select></label></div><button onclick="calculate()">Calculate Chargeable Weight</button><div class="outputs"><span>Actual <b id="ao">2.00 kg</b></span><span>Volumetric <b id="vo">1.80 kg</b></span><strong>CHARGEABLE <b id="co">2.00 kg</b></strong></div><button class="outline" onclick="getQuote()">Get an estimated quote →</button><div id="quoteResult"></div></div></div></section>
+
+<section class="section gray" id="item-request">
+<div class="wrap narrow">
+<small>NEED HELP WITH YOUR SHIPMENT?</small><h2>Tell Us What You're Sending</h2>
+<p>Make your own list, or simply send us pictures of the articles. Our team will review them and contact you.</p>
+<div class="request-tabs"><button type="button" class="request-tab active" onclick="setRequestType('list',this)">📝 Make My List</button><button type="button" class="request-tab" onclick="setRequestType('photos',this)">📸 Send Pictures</button></div>
+<form id="itemRequestForm" class="panel" onsubmit="submitItemRequest(event)">
+<input type="hidden" id="requestType" value="list">
+<div id="listPanel"><div id="customRows"></div><button type="button" class="outline" onclick="addItemRow()">+ Add Another Item</button><p class="hint">Add item name, quantity and approximate weight if known.</p></div>
+<div id="photoPanel" style="display:none"><label class="upload-box"><b>📸 Upload Pictures of Your Articles</b><small>JPG, PNG or WEBP · Multiple photos allowed · Max 5 MB each</small><input id="articlePhotos" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden></label><div id="photoPreview" class="photo-preview"></div></div>
+<div class="row"><label>Name *<input id="reqName" required placeholder="Your name"></label><label>Phone Number *<input id="reqPhone" required type="tel" inputmode="tel" placeholder="+91 XXXXX XXXXX"></label></div>
+<div class="row"><label>Destination Country *<input id="reqDestination" required placeholder="e.g. Canada"></label></div>
+<label>Additional Message<textarea id="reqMessage" rows="3" placeholder="Anything else you want us to know?"></textarea></label>
+<div class="contact-note">📞 <b>Phone number is mandatory.</b> Our team will use it to revert after reviewing your list or photos.</div>
+<button class="cta" type="submit">GET MY QUOTE / SEND FOR REVIEW →</button><p id="itemRequestResult"></p>
+</form></div></section>
+<style>
+.request-tabs{display:flex;gap:10px;margin:20px 0}.request-tab{padding:11px 18px;border:1px solid #ccd4e0;background:#fff;border-radius:9px;font-weight:700;cursor:pointer}.request-tab.active{background:#0b2d6b;color:#fff}.custom-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin-bottom:10px}.custom-row input{padding:10px;border:1px solid #ccd4e0;border-radius:8px}.custom-row button{border:0;border-radius:8px}.upload-box{display:flex;flex-direction:column;align-items:center;gap:8px;padding:35px;border:2px dashed #b9c5d6;border-radius:12px;text-align:center;cursor:pointer}.photo-preview{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.photo-preview img{width:100px;height:100px;object-fit:cover;border-radius:8px}.hint{font-size:13px}.contact-note{margin:15px 0;padding:12px;background:#fff7df;border:1px solid #efd58b;border-radius:8px}@media(max-width:700px){.custom-row{grid-template-columns:1fr 1fr}.custom-row input:first-child{grid-column:1/-1}}
+</style>
+<section class="section send-check gray" id="send-check"><div class="wrap two"><div><small>CAN I SEND THIS?</small><h2>Check an item before you pack it.</h2><p>Type an item name for a quick preliminary check. Final acceptance depends on the carrier, customs and destination-country rules.</p><div class="check-examples"><button type="button" onclick="checkItemExample('ghee')">Ghee</button><button type="button" onclick="checkItemExample('medicines')">Medicines</button><button type="button" onclick="checkItemExample('power bank')">Power bank</button><button type="button" onclick="checkItemExample('clothes')">Clothes</button></div></div><div class="panel checker-panel"><label>What do you want to send?<input id="sendItemInput" placeholder="e.g. ghee, saree, medicines"></label><button onclick="checkSendItem()">Check Item →</button><div id="sendCheckResult" class="send-result"><b>Quick check</b><span>Enter an item to see whether it may need a review.</span></div></div></div></section>
+<section class="section" id="services"><div class="wrap"><small>SERVICES</small><h2>International courier made simple.</h2><div class="grid"><article>✈<h3>International Express</h3><p>Time-sensitive door-to-door international courier.</p></article><article>▤<h3>Documents & Parcels</h3><p>Personal documents, gifts and parcels.</p></article><article>◫<h3>Commercial Shipments</h3><p>Samples, merchandise and e-commerce shipments.</p></article><article>⌁<h3>Multi-Carrier Tracking</h3><p>One convenient tracking experience.</p></article></div></div></section>
+<section class="section gray" id="faq"><div class="wrap narrow"><small>FAQ</small><h2>Frequently asked questions</h2><details open><summary>What is chargeable weight?</summary><p>Generally the higher of actual and volumetric weight, subject to the carrier/service rules.</p></details><details><summary>Can I track DHL and FedEx here?</summary><p>Yes. Live results require the relevant carrier API integration.</p></details><details><summary>Does the calculator give the final price?</summary><p>It can give an estimate when your actual TMS tariff is configured. Final charges remain subject to applicable conditions.</p></details></div></section>
+<section class="section" id="terms"><div class="wrap narrow"><small>LEGAL</small><h2>Terms & Conditions</h2><div class="terms"><p><b>Website use.</b> Tracking and calculations are provided for convenience and are not a delivery guarantee unless confirmed by TMS Global.</p><p><b>Tracking.</b> Carrier status can change as new scans are received.</p><p><b>Weight and rates.</b> Calculations and estimates depend on the applicable tariff, measured shipment details, destination, service and surcharges.</p><p><b>Customs.</b> Shipments are subject to applicable laws, customs requirements and prohibited/restricted-item rules.</p><p><b>Duties and taxes.</b> Destination duties, taxes and clearance charges may apply.</p><p><b>Enquiries.</b> Information submitted through this site may be used to respond to a quote or support request.</p><strong>Replace this sample wording with your final legal Terms & Conditions and Privacy Policy before publishing.</strong></div></div></section>
+<section class="section contact" id="contact"><div class="wrap two"><div><small>CONTACT TMS GLOBAL</small><h2>Need a quote or help?</h2><p>Tell us the origin, destination, shipment details and AWB if you have one.</p><p>☎ <a href="tel:+919501001114">+91 95010 01114</a><br>✉ <a href="mailto:your@email.com">your@email.com</a><br>⌖ Ludhiana, Punjab</p><div class="contact-actions"><a class="cta" href="tel:+919501001114">CALL TMS GLOBAL</a><a class="review-btn outline" href="https://wa.me/919501001114?text=Hi%20TMS%20Global%2C%20I%20need%20a%20courier%20quote." target="_blank" rel="noopener">WHATSAPP</a></div></div><form class="panel" onsubmit="sendEnquiry(event)"><h3>Request a quote / enquiry</h3><div class="row"><input required name="name" placeholder="Name"><input required name="phone" placeholder="Phone"></div><div class="row"><input required type="email" name="email" placeholder="Email"><input name="awb" placeholder="AWB"></div><div class="row"><input name="origin" placeholder="From"><input name="destination" placeholder="To"></div><textarea required name="message" placeholder="Your query"></textarea><button>Send Enquiry →</button><p id="formMsg"></p></form></div></section>
+
+<section id="trust-reviews" class="trust-reviews-section">
+  <div class="wrap">
+    <div class="trust-head">
+      <div>
+        <small>TRUST &amp; REVIEWS</small>
+        <h2>What Our Customers Say</h2>
+        <p>See our genuine Google reviews and share your experience with TMS Global.</p>
+      </div>
+      <div class="google-rating-card">
+        <div class="google-mark">G</div>
+        <div>
+          <strong>5.0 ★</strong>
+          <span>25 Google reviews</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-actions">
+      <a class="review-btn" href="https://www.google.com/maps/search/?api=1&query=TMS%20Global%20International%20Courier%2C%20255%20Housing%20Board%20Colony%2C%20BRS%20Nagar%2C%20Ludhiana%2C%20Punjab%20141012&query_place_id=ChIJjWJpgWKBGjkRItqbchVwQ4E" target="_blank" rel="noopener">Read Google Reviews ↗</a>
+      <a class="review-btn outline" href="https://search.google.com/local/writereview?placeid=ChIJjWJpgWKBGjkRItqbchVwQ4E" target="_blank" rel="noopener">★ Leave a Google Review</a>
+    </div>
+
+    <div class="review-note">
+      <strong>Genuine customer feedback</strong>
+      <span>Reviews are shown on Google. We do not publish invented testimonials on this website.</span>
+    </div>
+  </div>
+</section>
+
+<section id="how-it-works" class="how-section">
+  <div class="wrap">
+    <div class="trust-head">
+      <div>
+        <small>SIMPLE SHIPPING PROCESS</small>
+        <h2>Send It. We Handle The Rest.</h2>
+        <p>Not sure about the item, courier or paperwork? Start with a quote and let our team guide you.</p>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <article><b>01</b><h3>Tell Us What You're Sending</h3><p>Make your own list or upload photos of your articles.</p></article>
+      <article><b>02</b><h3>Share Destination &amp; Weight</h3><p>We check the available courier options and chargeable weight.</p></article>
+      <article><b>03</b><h3>Get Your Quote</h3><p>Receive an estimated price and clarification on applicable charges.</p></article>
+      <article><b>04</b><h3>Book &amp; Track</h3><p>Hand over your shipment and track it using your AWB.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="help-me-choose" class="help-section">
+  <div class="wrap help-box">
+    <div>
+      <small>NOT SURE WHAT TO DO?</small>
+      <h2>Let TMS Global Help You</h2>
+      <p>Tell us your destination, approximate weight and what you're sending. Our team can help you understand the available shipping options.</p>
+    </div>
+    <a class="cta" href="#item-request">GET A QUOTE</a>
+  </div>
+</section>
+
+<section id="business-shipping" class="business-section">
+  <div class="wrap">
+    <div class="business-box">
+      <div>
+        <small>FOR REGULAR SHIPPERS</small>
+        <h2>Business Shipping</h2>
+        <p>Sending international parcels regularly? Contact us for a dedicated discussion around your shipment volume and destinations.</p>
+      </div>
+      <a class="cta" href="#item-request">DISCUSS BUSINESS SHIPPING</a>
+    </div>
+  </div>
+</section>
+
+<div class="floating-whatsapp">
+  <a href="https://wa.me/919501001114?text=Hi%20TMS%20Global%2C%20I%20want%20help%20with%20an%20international%20courier%20shipment." target="_blank" rel="noopener" aria-label="Chat with TMS Global on WhatsApp">💬 WhatsApp Us</a>
+</div>
+
+<style>
+.trust-reviews-section,.how-section,.help-section,.business-section{padding:72px 0;background:transparent}
+.trust-head{display:flex;justify-content:space-between;align-items:center;gap:30px}
+.trust-head h2{margin:7px 0 10px}
+.trust-head p{max-width:650px;color:#657184}
+.google-rating-card{display:flex;align-items:center;gap:12px;padding:15px 18px;border:1px solid #e5e7eb;border-radius:14px;background:#fff;min-width:190px}
+.google-mark{font-size:32px;font-weight:900}
+.google-rating-card strong{display:block;font-size:22px;color:#111}
+.google-rating-card span{display:block;font-size:11px;color:#667085}
+.review-actions{display:flex;gap:12px;margin:25px 0 16px;flex-wrap:wrap}
+.review-btn{display:inline-flex;align-items:center;padding:12px 17px;border-radius:9px;background:#111;color:#fff;text-decoration:none;font-weight:800}
+.review-btn.outline{background:#fff;color:#111;border:1px solid #d4af37}
+.review-note{display:flex;gap:8px;align-items:center;padding:13px 15px;background:#fff8df;border:1px solid #ead68c;border-radius:9px;color:#5f520e;font-size:12px}
+.review-note span{color:#6b7280}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:25px}
+.steps-grid article{padding:23px;border:1px solid #e1e5eb;border-radius:15px;background:#fff}
+.steps-grid b{color:#c29312;font-size:13px}
+.steps-grid h3{font-size:16px;margin:10px 0 6px}
+.steps-grid p{font-size:11px;color:#667085;margin:0}
+.help-box,.business-box{display:flex;justify-content:space-between;align-items:center;gap:25px;padding:30px;border-radius:18px;border:1px solid #e3d39a;background:linear-gradient(135deg,#fffdf3,#fff5d2)}
+.help-box h2,.business-box h2{margin:7px 0}
+.help-box p,.business-box p{color:#667085;max-width:700px}
+.floating-whatsapp{position:fixed;right:22px;bottom:22px;z-index:50}
+.floating-whatsapp a{display:block;padding:13px 17px;border-radius:999px;background:#159447;color:#fff;text-decoration:none;font-weight:900;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+@media(max-width:800px){
+  .trust-head,.help-box,.business-box{flex-direction:column;align-items:flex-start}
+  .steps-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){.steps-grid{grid-template-columns:1fr}.google-rating-card{width:100%}}
+</style>
+
+<section class="section gray" id="privacy"><div class="wrap narrow"><small>LEGAL</small><h2>Privacy</h2><div class="terms"><p>We collect information you submit through quote, tracking-support and item-request forms to respond to your enquiry and provide shipment support.</p><p>Do not upload sensitive documents or payment-card information unless TMS Global specifically requests them through an approved channel.</p><p>Replace this sample wording with your final Privacy Policy, retention periods and contact details before publishing.</p></div></div></section>
+<footer><div class="wrap"><img src="logo.png"><span>International Courier Service</span><a href="#terms">Terms & Conditions</a><a href="#privacy">Privacy</a></div></footer><script src="site.js"></script>
+<script>
+/* TMS Global item catalogue for future/admin pricing integration. */
+window.TMS_EXPANDED_ITEM_CATALOGUE = {
+  "Clothes": [
+    {"name":"Shirts / T-Shirts"},{"name":"Trousers / Jeans"},{"name":"Jackets / Sweaters"},
+    {"name":"Traditional Wear"},{"name":"Lehenga","warning":"Volumetric weight may apply depending on packing size."},
+    {"name":"Saree"},{"name":"Salwar Suit / Suit"},{"name":"Kurta / Kurti"},{"name":"Sherwani"},
+    {"name":"Dupatta / Stole"},{"name":"Bedsheet / Blanket"},{"name":"Towels"},{"name":"Shoes / Footwear"}
+  ],
+  "Eatables": [
+    {"name":"Packaged Snacks"},{"name":"Sweets"},{"name":"Spices / Masala"},{"name":"Tea / Coffee"},
+    {"name":"Dry Fruits"},{"name":"Pickles"},{"name":"Papad"},{"name":"Biscuits"},{"name":"Chocolates"},
+    {"name":"Ready-to-eat Food"},{"name":"Packaged Groceries"}
+  ],
+  "Utensils": [
+    {"name":"Steel Utensils"},{"name":"Kitchen Items"},{"name":"Cookware / Pans"},
+    {"name":"Plates / Bowls"},{"name":"Cutlery"},{"name":"Glassware"}
+  ],
+  "Medicines": [
+    {"name":"OTC Medicines","warning":"Subject to destination-country rules."},
+    {"name":"Prescription Medicines","warning":"Prescription / supporting documents may be required."},
+    {"name":"Vitamins / Supplements","warning":"Subject to destination-country import rules."}
+  ],
+  "Personal Items": [
+    {"name":"Books"},{"name":"Toys"},{"name":"Cosmetics / Toiletries"},{"name":"Handbags / Purses"},
+    {"name":"Bags / Backpacks"},{"name":"Stationery"},{"name":"Decorative Items"},{"name":"Religious / Pooja Items"}
+  ],
+  "Electronics": [
+    {"name":"Small Accessories"},{"name":"Chargers / Cables"},{"name":"Earphones / Headphones"},
+    {"name":"Keyboard / Mouse"},{"name":"Small Electronic Devices","warning":"Battery/electronics restrictions may apply."}
+  ],
+  "Documents": [
+    {"name":"Personal Documents"},{"name":"Certificates"},{"name":"Educational Documents"},{"name":"Legal Documents"}
+  ],
+  "Gifts": [
+    {"name":"Gifts"},{"name":"Greeting Cards"},{"name":"Handicrafts"},{"name":"Decorations"}
+  ],
+  "Other": [{"name":"Other"}]
+};
+</script>
+
+</body></html>

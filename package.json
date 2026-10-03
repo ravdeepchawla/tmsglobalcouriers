@@ -1,0 +1,9 @@
+{
+  "name": "tms-global-static",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx --yes serve . -l 3001",
+    "start": "npx --yes serve . -l 3001"
+  }
+}
