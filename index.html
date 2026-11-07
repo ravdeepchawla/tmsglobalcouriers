@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TMS Global | Track Your Parcel</title><link rel="stylesheet" href="site.css"></head><body>
-<header><div class="wrap nav"><a href="/"><img src="logo.png" alt="TMS Global"></a><button class="mobile-menu" type="button" onclick="toggleMenu()" aria-label="Open menu">☰</button><nav id="mainNav"><a href="#tracking">Track</a><a href="#calculator">Weight</a><a href="#send-check">Can I Send?</a><a href="#item-request">Send Items</a><a href="#trust-reviews">Reviews</a><a class="cta" href="#item-request">Get a Quote</a></nav></div></header>
+<header><div class="wrap nav"><a href="/"><img src="logo.png" alt="TMS Global"></a><button class="mobile-menu" type="button" onclick="toggleMenu()" aria-label="Open menu">☰</button><nav id="mainNav"><a href="#tracking">Track</a><a href="#calculator">Weight</a><a href="#send-check">Can I Send?</a><a href="#trust-reviews">Reviews</a><a class="cta" href="#contact">Get a Quote</a></nav></div></header>
 <section class="hero"><div class="wrap hero-grid"><div><small>TMS GLOBAL INTERNATIONAL COURIER SERVICE</small><h1>Track your parcel.<br><em>Know where it is.</em></h1><p>International courier tracking, chargeable-weight calculation and customer support in one place.</p>
 <div class="hero-box"><b>TRACK YOUR PARCEL</b><div><input id="hAwb" placeholder="Enter AWB / tracking number"><button onclick="heroTrack()">Track Now →</button></div></div>
 <a class="secondary" href="#calculator">⚖ Know Your Chargeable Weight →</a></div><div class="visual"><div class="badge">✈ INTERNATIONAL</div><div class="ship"><span>● Shipment tracking <b>LIVE</b></span><h2>In Transit</h2><p>India → Destination</p><hr><div>Booked　━━━━　In Transit　━━━━　Delivered</div></div></div></div></section>
@@ -8,21 +8,7 @@
 <section class="section" id="tracking"><div class="wrap"><small>SHIPMENT TRACKING</small><h2>Track your shipment</h2><div class="panel form3"><input id="awb" placeholder="AWB / tracking number"><button onclick="track()">Track Shipment →</button></div><div id="trackResult"></div></div></section>
 <section class="section gray" id="calculator"><div class="wrap two"><div><small>KNOW YOUR CHARGEABLE WEIGHT</small><h2>Calculate before you ship.</h2><p>Compare actual and volumetric weight before requesting a quote.</p><div class="formula">Volumetric Weight = <b>L × W × H ÷ Divisor</b><small>Default divisor: 5000</small></div></div><div class="panel"><div class="row"><label>Pieces<input id="pieces" value="1" type="number"></label><label>Actual kg / piece<input id="actual" value="2" type="number" step=".01"></label></div><div class="row"><label>Length cm<input id="length" value="30" type="number"></label><label>Width cm<input id="width" value="20" type="number"></label><label>Height cm<input id="height" value="15" type="number"></label></div><div class="row"><label>Destination<select id="destination"><option>Canada</option><option>USA</option><option>United Kingdom</option><option>Australia</option><option>UAE</option></select></label><label>Carrier<select id="qcarrier"><option>DHL</option><option>FedEx</option><option>UPS</option></select></label></div><button onclick="calculate()">Calculate Chargeable Weight</button><div class="outputs"><span>Actual <b id="ao">2.00 kg</b></span><span>Volumetric <b id="vo">1.80 kg</b></span><strong>CHARGEABLE <b id="co">2.00 kg</b></strong></div><button class="outline" onclick="getQuote()">Get an estimated quote →</button><div id="quoteResult"></div></div></div></section>
 
-<section class="section gray" id="item-request">
-<div class="wrap narrow">
-<small>NEED HELP WITH YOUR SHIPMENT?</small><h2>Tell Us What You're Sending</h2>
-<p>Make your own list, or simply send us pictures of the articles. Our team will review them and contact you.</p>
-<div class="request-tabs"><button type="button" class="request-tab active" onclick="setRequestType('list',this)">📝 Make My List</button><button type="button" class="request-tab" onclick="setRequestType('photos',this)">📸 Send Pictures</button></div>
-<form id="itemRequestForm" class="panel" onsubmit="submitItemRequest(event)">
-<input type="hidden" id="requestType" value="list">
-<div id="listPanel"><div id="customRows"></div><button type="button" class="outline" onclick="addItemRow()">+ Add Another Item</button><p class="hint">Add item name, quantity and approximate weight if known.</p></div>
-<div id="photoPanel" style="display:none"><label class="upload-box"><b>📸 Upload Pictures of Your Articles</b><small>JPG, PNG or WEBP · Multiple photos allowed · Max 5 MB each</small><input id="articlePhotos" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden></label><div id="photoPreview" class="photo-preview"></div></div>
-<div class="row"><label>Name *<input id="reqName" required placeholder="Your name"></label><label>Phone Number *<input id="reqPhone" required type="tel" inputmode="tel" placeholder="+91 XXXXX XXXXX"></label></div>
-<div class="row"><label>Destination Country *<input id="reqDestination" required placeholder="e.g. Canada"></label></div>
-<label>Additional Message<textarea id="reqMessage" rows="3" placeholder="Anything else you want us to know?"></textarea></label>
-<div class="contact-note">📞 <b>Phone number is mandatory.</b> Our team will use it to revert after reviewing your list or photos.</div>
-<button class="cta" type="submit">GET MY QUOTE / SEND FOR REVIEW →</button><p id="itemRequestResult"></p>
-</form></div></section>
+
 <style>
 .request-tabs{display:flex;gap:10px;margin:20px 0}.request-tab{padding:11px 18px;border:1px solid #ccd4e0;background:#fff;border-radius:9px;font-weight:700;cursor:pointer}.request-tab.active{background:#0b2d6b;color:#fff}.custom-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin-bottom:10px}.custom-row input{padding:10px;border:1px solid #ccd4e0;border-radius:8px}.custom-row button{border:0;border-radius:8px}.upload-box{display:flex;flex-direction:column;align-items:center;gap:8px;padding:35px;border:2px dashed #b9c5d6;border-radius:12px;text-align:center;cursor:pointer}.photo-preview{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.photo-preview img{width:100px;height:100px;object-fit:cover;border-radius:8px}.hint{font-size:13px}.contact-note{margin:15px 0;padding:12px;background:#fff7df;border:1px solid #efd58b;border-radius:8px}@media(max-width:700px){.custom-row{grid-template-columns:1fr 1fr}.custom-row input:first-child{grid-column:1/-1}}
 </style>
@@ -86,7 +72,7 @@
       <h2>Let TMS Global Help You</h2>
       <p>Tell us your destination, approximate weight and what you're sending. Our team can help you understand the available shipping options.</p>
     </div>
-    <a class="cta" href="#item-request">GET A QUOTE</a>
+    <a class="cta" href="#contact">GET A QUOTE</a>
   </div>
 </section>
 
@@ -98,7 +84,7 @@
         <h2>Business Shipping</h2>
         <p>Sending international parcels regularly? Contact us for a dedicated discussion around your shipment volume and destinations.</p>
       </div>
-      <a class="cta" href="#item-request">DISCUSS BUSINESS SHIPPING</a>
+      <a class="cta" href="#contact">DISCUSS BUSINESS SHIPPING</a>
     </div>
   </div>
 </section>
