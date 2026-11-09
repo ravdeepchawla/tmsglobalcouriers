@@ -66,6 +66,7 @@ function toggleHistory(b){const box=b.previousElementSibling;box.classList.toggl
 async function track(awbOverride){
   const awb={value:(awbOverride||document.getElementById("hAwb")?.value||"").trim()};
   const trackResult=document.getElementById("trackResult");
+  trackResult.closest(".visual")?.classList.add("has-tracking-result");
   trackResult.innerHTML='<div class="result">Looking up shipment…</div>';
   const d=await post("/api/track",{awb:awb.value.trim()});
   if(d.error){trackResult.innerHTML=`<div class="result trk-err">${esc(d.error)}</div>`;return}
