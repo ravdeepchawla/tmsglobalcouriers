@@ -211,3 +211,25 @@ body.page-detail .detail-page-section.active{display:block!important}
 .carrier-logo img{width:100%;height:70px;max-width:160px;object-fit:contain}
 .carrier-logo span{font-size:11px;font-weight:800;color:#24334a}
 @media(max-width:700px){.carrier-logo{width:155px;min-height:105px}.carrier-logo img{height:62px;max-width:130px}}
+
+/* Keep the live tracking result layout independent from the hero input row. */
+.hero-box > div:not(.hero-track-result){display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;margin-top:10px}
+.hero-box .hero-track-result{display:block;width:100%;min-width:0;margin-top:16px;box-sizing:border-box;color:#172033}
+.hero-box .hero-track-result .result.trk{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;background:#fff;color:#172033;border:1px solid #e5eaf2;border-radius:16px;padding:20px;overflow:hidden}
+.hero-box .hero-track-result .trk-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.hero-box .hero-track-result .trk-head h3{font-size:23px;line-height:1.25;color:#111827;margin:4px 0}
+.hero-box .hero-track-result .trk-head small{display:block;color:#64748b;font-size:11px;letter-spacing:1px}
+.hero-box .hero-track-result .trk-steps{display:flex;gap:8px;list-style:none;padding:0;margin:22px 0}
+.hero-box .hero-track-result .trk-steps li{display:block;flex:1;min-width:0;text-align:center;padding-top:20px;font-size:12px;line-height:1.4;color:#64748b}
+.hero-box .hero-track-result .trk-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:14px;padding:16px 0;border-top:1px solid #e8edf3;border-bottom:1px solid #e8edf3}
+.hero-box .hero-track-result .trk-facts>div{display:block;min-width:0;overflow-wrap:anywhere}
+.hero-box .hero-track-result .trk-facts small{display:block;color:#64748b;font-size:10px;letter-spacing:1px}
+.hero-box .hero-track-result .trk-facts b{display:block;color:#172033;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.hero-box .hero-track-result .trk-tl{display:block;margin-top:14px}
+.hero-box .hero-track-result .trk-ev{display:flex;align-items:flex-start;gap:12px;padding:8px 0}
+.hero-box .hero-track-result .trk-ev>div{display:block;min-width:0;flex:1}
+.hero-box .hero-track-result .trk-ev b{display:block;color:#172033;font-size:13px;line-height:1.5}
+.hero-box .hero-track-result .trk-ev span{display:block;color:#64748b;font-size:12px;line-height:1.5}
+.hero-box .hero-track-result .trk-tl h4{display:block;color:#64748b;font-size:11px}
+.hero-box .hero-track-result .trk-more{display:inline-block;background:#fff;color:#172033}
+@media(max-width:700px){.hero-box > div:not(.hero-track-result){grid-template-columns:1fr}.hero-box .hero-track-result .trk-facts{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-box .hero-track-result .result.trk{padding:16px}.hero-box .hero-track-result .trk-head h3{font-size:20px}}
