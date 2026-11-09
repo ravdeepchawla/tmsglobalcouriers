@@ -64,6 +64,8 @@ function fmtTime(s){const d=new Date(String(s).replace(" ","T"));return isNaN(d)
 function trackStage(d){const st=String(d.status).toLowerCase();if(/deliver/.test(st)&&!/undeliver|out for|not deliver/.test(st))return 3;return d.events.length?2:1}
 function toggleHistory(b){const box=b.previousElementSibling;box.classList.toggle("open");b.textContent=box.classList.contains("open")?"Show less":"Show full history"}
 async function track(awbOverride){
+  const awb={value:(awbOverride||document.getElementById("hAwb")?.value||"").trim()};
+  const trackResult=document.getElementById("trackResult");
   trackResult.innerHTML='<div class="result">Looking up shipment…</div>';
   const d=await post("/api/track",{awb:awb.value.trim()});
   if(d.error){trackResult.innerHTML=`<div class="result trk-err">${esc(d.error)}</div>`;return}
