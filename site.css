@@ -287,3 +287,16 @@ body.page-detail .detail-page-section.active{display:block!important}
 .founder-caption strong{font-size:16px;color:#0b2d6b}
 .founder-caption span{font-size:10px;letter-spacing:1px;font-weight:800;color:#64748b}
 @media(max-width:850px){.founder-layout{grid-template-columns:1fr;gap:30px}.founder-profile{justify-self:center;max-width:390px}.founder-copy h2{font-size:36px}}
+
+
+/* Homepage hero tracking control sizing */
+.hero-box div{grid-template-columns:minmax(0,1fr) 140px;align-items:stretch}
+.hero-box input{width:100%;min-height:50px;box-sizing:border-box;font-size:14px}
+.hero-box button{width:100%;min-height:50px;padding:0 16px;font-size:14px;font-weight:800;white-space:nowrap}
+@media(max-width:850px){
+  .hero-box div{grid-template-columns:minmax(0,1fr) 140px;gap:10px}
+}
+@media(max-width:420px){
+  .hero-box div{grid-template-columns:minmax(0,1fr) 128px;gap:8px}
+  .hero-box button{font-size:12px;padding:0 8px}
+}
