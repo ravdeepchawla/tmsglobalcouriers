@@ -488,3 +488,41 @@ footer a:hover{color:var(--tms-yellow)}
  .site-footer .footer-grid{grid-template-columns:minmax(0,1fr);row-gap:22px}
  .site-footer .footer-block{width:100%}
 }
+
+
+/* Origin and destination route panel with country flags */
+.trk-route{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr);
+  align-items:center;
+  gap:22px;
+  margin:20px 0 18px;
+  padding:16px 18px;
+  background:linear-gradient(110deg,#fff 0%,#fafafa 100%);
+  border:1px solid #e7e9ed;
+  border-radius:14px;
+}
+.trk-route-point{display:flex;align-items:center;gap:14px;min-width:0}
+.trk-flag{
+  display:flex;align-items:center;justify-content:center;flex:0 0 58px;
+  width:58px;height:46px;border-radius:10px;background:#fff;
+  font-family:"Apple Color Emoji","Segoe UI Emoji",sans-serif;
+  font-size:35px;line-height:1;box-shadow:0 3px 10px rgba(0,0,0,.09);
+}
+.trk-route-point>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.trk-route-point small{font-size:10px;letter-spacing:1.2px;font-weight:800;color:#777}
+.trk-route-point b{font-size:15px;line-height:1.35;color:#111;overflow-wrap:anywhere}
+.trk-route-divider{width:1px;height:48px;background:#d9dde3}
+@media(max-width:600px){
+ .trk-route{gap:10px;padding:13px 11px}
+ .trk-route-point{gap:8px}
+ .trk-flag{flex-basis:40px;width:40px;height:36px;font-size:27px;border-radius:8px}
+ .trk-route-point small{font-size:9px}
+ .trk-route-point b{font-size:12px}
+ .trk-route-divider{height:42px}
+}
+@media(max-width:360px){
+ .trk-route{grid-template-columns:minmax(0,1fr);gap:12px}
+ .trk-route-divider{display:none}
+ .trk-route-point{padding:2px 0}
+}
