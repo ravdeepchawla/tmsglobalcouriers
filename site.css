@@ -265,10 +265,10 @@ body.page-detail .detail-page-section.active{display:block!important}
 @media(max-width:520px){.hero-box>div{grid-template-columns:1fr}.visual .hero-track-result .result.trk{padding:17px}.visual .hero-track-result .trk-head h3{font-size:21px}.visual .hero-track-result .trk-tl{max-height:400px}}
 
 /* Breaking news strip directly below the site header. */
-.breaking-news{display:flex;align-items:center;gap:16px;min-height:46px;padding:8px max(24px,calc((100% - 1160px)/2));box-sizing:border-box;background:#fff5d6;border-bottom:1px solid #f1d27a;color:#172033;font-size:13px;line-height:1.4;overflow:hidden}
+.breaking-news{display:flex;align-items:center;gap:16px;min-height:54px;padding:9px max(24px,calc((100% - 1160px)/2));box-sizing:border-box;background:#fff0b8;border-top:2px solid #e0a000;border-bottom:2px solid #e0a000;color:#8f1d14;font-size:14px;line-height:1.45;overflow:hidden;box-shadow:0 3px 12px rgba(143,29,20,.10)}
 .breaking-news-label{position:relative;z-index:1;flex:0 0 auto;background:#b42318;color:#fff;font-size:11px;font-weight:800;letter-spacing:.08em;padding:7px 11px;border-radius:4px}
 .breaking-news-window{flex:1;min-width:0;overflow:hidden;white-space:nowrap}
-.breaking-news-message{display:inline-block;font-weight:700;will-change:transform;padding-left:100%;animation:notice-marquee 28s linear infinite}
+.breaking-news-message{display:inline-block;color:#a31313;font-weight:900;letter-spacing:.035em;text-transform:uppercase;text-shadow:0 0 .01px currentColor;will-change:transform;padding:5px 12px;padding-left:100%;animation:notice-marquee 28s linear infinite}
 @keyframes notice-marquee{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 .breaking-news-window:hover .breaking-news-message{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){.breaking-news-message{padding-left:0;animation:none;white-space:normal}}
