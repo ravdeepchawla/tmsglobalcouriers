@@ -273,3 +273,17 @@ body.page-detail .detail-page-section.active{display:block!important}
 .breaking-news-window:hover .breaking-news-message{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){.breaking-news-message{padding-left:0;animation:none;white-space:normal}}
 @media(max-width:600px){.breaking-news{gap:9px;padding:8px 14px;font-size:12px}.breaking-news-label{font-size:10px}.breaking-news-message{animation-duration:32s}}
+
+
+/* Founder profile — About Us */
+.founder-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:58px;align-items:center}
+.founder-copy h2{font-size:clamp(34px,4vw,48px);line-height:1.12;letter-spacing:-1.8px;margin:10px 0 20px;color:#14213a}
+.founder-copy p{font-size:14px;line-height:1.9;color:#58667d;margin:0 0 14px}
+.founder-signoff{padding-top:10px;border-top:1px solid #e7ebf2}
+.founder-signoff strong{color:#0b2d6b;letter-spacing:.4px}
+.founder-profile{max-width:430px;justify-self:end;width:100%;overflow:hidden;border-radius:22px;background:#fff;border:1px solid #e7ebf2;box-shadow:0 22px 55px rgba(11,45,107,.13)}
+.founder-profile img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 28%}
+.founder-caption{display:flex;flex-direction:column;gap:4px;padding:18px 20px}
+.founder-caption strong{font-size:16px;color:#0b2d6b}
+.founder-caption span{font-size:10px;letter-spacing:1px;font-weight:800;color:#64748b}
+@media(max-width:850px){.founder-layout{grid-template-columns:1fr;gap:30px}.founder-profile{justify-self:center;max-width:390px}.founder-copy h2{font-size:36px}}
