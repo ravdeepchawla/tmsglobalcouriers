@@ -61,7 +61,7 @@ async function calculate(){const d=await post("/api/calculate-weight",getWeightD
 async function getQuote(){const d=await post("/api/quote",{...getWeightData(),destination:destination.value,carrier:qcarrier.value,service:"International Express"});quoteResult.innerHTML=d.found?`<div class="result"><b>Estimated freight: ₹${d.estimatedFreight.toLocaleString("en-IN")}</b><br><small>${d.chargeableWeight.toFixed(2)} kg chargeable · ${d.carrier} · ${d.destination}</small></div>`:`<div class="result">${d.message}</div>`}
 function fmtDate(s){const d=new Date(String(s).replace(" ","T"));return isNaN(d)?s:d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}
 function fmtTime(s){const d=new Date(String(s).replace(" ","T"));return isNaN(d)?"":d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}
-function trackStage(d){const st=String(d.status).toLowerCase();if(/deliver/.test(st)&&!/undeliver|out for|not deliver/.test(st))return 3;return d.events.length?2:1}
+function trackStage(d){const st=String(d.status).toLowerCase();if(/deliver/.test(st)&&!/undeliver|out for|not deliver/.test(st))return 3;if(/\\b(on hold|hold|held|exception|shipment delayed|clearance delay)\\b/.test(st))return 4;return d.events.length?2:1}
 function toggleHistory(b){const box=b.previousElementSibling;box.classList.toggle("open");b.textContent=box.classList.contains("open")?"Show less":"Show full history"}
 async function track(awbOverride){
   const awb={value:(awbOverride||document.getElementById("hAwb")?.value||"").trim()};
@@ -70,11 +70,11 @@ async function track(awbOverride){
   trackResult.innerHTML='<div class="result">Looking up shipment…</div>';
   const d=await post("/api/track",{awb:awb.value.trim()});
   if(d.error){trackResult.innerHTML=`<div class="result trk-err">${esc(d.error)}</div>`;return}
-  const stage=trackStage(d),done=stage===3;
-  const steps=["Booked","In transit","Delivered"].map((n,i)=>`<li class="${i+1<stage||done&&i<3?"done":i+1===stage?"now":""}"><span></span>${n}</li>`).join("");
+  const stage=trackStage(d),done=stage===3,held=stage===4,statusTone=done?"delivered":held?"hold":stage===2?"transit":"booked";
+  const steps=["Booked","In transit","Delivered"].map((n,i)=>{const cls=held?(i===0?"done":i===1?"now hold":""):i+1<stage||done?"done":i+1===stage?"now":"";return `<li class="${cls}"><span></span>${n}</li>`}).join("");
   const facts=[["From",[d.origin_city,d.origin].filter(Boolean).join(", ")],["To",[d.destination_city,d.destination].filter(Boolean).join(", ")],["Booked",d.booked&&fmtDate(d.booked)],[done?"Delivered":"Expected",done?d.delivered_at&&fmtDate(d.delivered_at):d.expected_delivery&&fmtDate(d.expected_delivery)],["Service",d.carrier],["Pieces",d.pieces]].filter(x=>String(x[0]).toLowerCase()!=="weight"&&x[1]).map(x=>`<div><small>${x[0]}</small><b>${esc(x[1])}</b></div>`).join("");
   let last="";const rows=d.events.map((e,i)=>{const day=e.at?fmtDate(e.at):"";const x=i>=5?" x":"";const head=day&&day!==last?`<h4 class="${x.trim()}">${esc(day)}</h4>`:"";last=day||last;return`${head}<div class="trk-ev${i===0?" first":""}${x}"><i></i><div><b>${esc(e.title)}</b><span>${esc([e.location,fmtTime(e.at)].filter(Boolean).join(" · "))}</span></div></div>`}).join("");
-  trackResult.innerHTML=`<div class="result trk"><div class="trk-head"><div><small>AWB ${esc(d.awb)}</small><h3>${esc(d.status)}</h3></div><span class="trk-badge${done?" ok":""}">${esc(d.carrier)}</span></div><ol class="trk-steps">${steps}</ol><div class="trk-facts">${facts}</div><div class="trk-tl${d.events.length<=5?" open":""}">${rows}</div>${d.events.length>5?'<button type="button" class="trk-more" onclick="toggleHistory(this)">Show full history</button>':""}</div>`}
+  trackResult.innerHTML=`<div class="result trk"><div class="trk-head"><div><small>AWB ${esc(d.awb)}</small><h3>${esc(d.status)}</h3></div><span class="trk-badge ${statusTone}">${esc(d.carrier)}</span></div><ol class="trk-steps">${steps}</ol><div class="trk-facts">${facts}</div><div class="trk-tl ${statusTone}${d.events.length<=5?" open":""}">${rows}</div>${d.events.length>5?'<button type="button" class="trk-more" onclick="toggleHistory(this)">Show full history</button>':""}</div>`}
 function heroTrack(){const input=document.getElementById("hAwb");if(!input.value.trim()){input.focus();return}track(input.value.trim())}
 async function sendEnquiry(e){e.preventDefault();const d=Object.fromEntries(new FormData(e.target));const r=await post("/api/enquiries",d);formMsg.textContent=r.ok?"Opening WhatsApp so you can send your enquiry to TMS Global.":r.error}
 
