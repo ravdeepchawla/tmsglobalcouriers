@@ -300,3 +300,13 @@ body.page-detail .detail-page-section.active{display:block!important}
   .hero-box div{grid-template-columns:minmax(0,1fr) 128px;gap:8px}
   .hero-box button{font-size:12px;padding:0 8px}
 }
+
+
+/* Align the hero tracking form and shipment preview cards along their bottom edge. */
+@media(min-width:851px){
+  .hero-grid{align-items:center}
+  .hero-grid>.visual{transform:translateY(56px)}
+}
+@media(max-width:850px){
+  .hero-grid>.visual{transform:none}
+}
