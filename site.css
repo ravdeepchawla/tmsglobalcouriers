@@ -390,3 +390,7 @@ footer a:hover{color:var(--tms-yellow)}
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
 }
+
+
+/* Rebrand refinement: remove the stray accent strip beneath the notice/hero boundary */
+.hero.home-primary:before{display:none!important;content:none!important}
