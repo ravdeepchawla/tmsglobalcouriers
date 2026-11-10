@@ -394,3 +394,64 @@ footer a:hover{color:var(--tms-yellow)}
 
 /* Rebrand refinement: remove the stray accent strip beneath the notice/hero boundary */
 .hero.home-primary:before{display:none!important;content:none!important}
+
+
+/* TMS GLOBAL footer rebrand — retain existing markup, logo and all links */
+.site-footer{
+  background:#111111!important;
+  color:#f5f5f5!important;
+  border-top:5px solid #F9C013!important;
+  padding:52px 0 0!important;
+}
+.site-footer .footer-grid{
+  gap:30px;
+  align-items:start;
+  padding-bottom:30px;
+}
+.site-footer .footer-brand img{
+  background:#fff;
+  border:1px solid rgba(249,192,19,.35);
+  border-radius:9px;
+}
+.site-footer .footer-brand p{color:#eeeeee}
+.site-footer .footer-brand strong{color:#F9C013}
+.site-footer .footer-block h3,
+.site-footer .footer-map h3{
+  color:#F9C013!important;
+  font-weight:800;
+}
+.site-footer .footer-block p{color:#eeeeee}
+.site-footer .footer-block a{
+  color:#F9C013!important;
+  text-decoration:none;
+}
+.site-footer .footer-block a:hover,
+.site-footer .footer-bottom a:hover{
+  color:#ffffff!important;
+  text-decoration:underline;
+}
+.site-footer .footer-bottom{
+  background:#CC2127;
+  border-top:3px solid #F9C013;
+  margin-top:0;
+  padding:18px 20px;
+  width:100%;
+  box-sizing:border-box;
+  color:#ffffff;
+}
+.site-footer .footer-bottom a{
+  color:#ffffff!important;
+  font-weight:700;
+}
+.site-footer .footer-bottom span{color:#ffffff}
+@media(max-width:850px){
+ .site-footer{padding-top:38px!important}
+ .site-footer .footer-grid{row-gap:26px}
+}
+@media(max-width:520px){
+ .site-footer{padding-top:32px!important}
+ .site-footer .footer-grid{gap:22px;padding-bottom:24px}
+ .site-footer .footer-brand img{width:138px}
+ .site-footer .footer-bottom{gap:14px;padding:17px 4%}
+ .site-footer .footer-bottom span{width:100%;margin:4px 0 0}
+}
