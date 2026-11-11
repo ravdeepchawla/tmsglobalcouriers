@@ -62,15 +62,18 @@ async function getQuote(){const d=await post("/api/quote",{...getWeightData(),de
 function fmtDate(s){const d=new Date(String(s).replace(" ","T"));return isNaN(d)?s:d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}
 function fmtTime(s){const d=new Date(String(s).replace(" ","T"));return isNaN(d)?"":d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}
 function trackStage(d){
-  const st=String(d.status||"").toLowerCase();
+  const st=String(d.status||"").toLowerCase().replace(/[_-]+/g," ");
   const events=(d.events||[]).map(e=>String(e.title||"").toLowerCase());
-  const all=[st,...events].join(" | ");
+  const all=events.join(" | ");
   if(/deliver/.test(st)&&!/undeliver|out for|not deliver/.test(st))return 3;
   if(/\b(on hold|hold|held|exception|shipment delayed|clearance delay)\b/.test(st))return 4;
+  if(/\b(in transit|intransit|transit)\b/.test(st))return 2;
+  if(/\b(entry|booked|shipment booked|label created|pre transit|pre-transit)\b/.test(st))return 1;
   if(/\b(delivered|proof of delivery)\b/.test(all)&&!/undeliver|out for|not deliver/.test(all))return 3;
-  if(/\b(on hold|held by customs|clearance delay|shipment exception|delivery exception|delayed)\b/.test(all))return 4;
+  const latest=events[0]||"";
+  if(/\b(on hold|held by customs|clearance delay|shipment exception|delivery exception|delayed)\b/.test(latest))return 4;
   const movement=/\b(picked up|collected|accepted at|received at|processed at|arrived at|departed|in transit|on the way|out for delivery|handed over|forwarded|customs clearance|clearance process|reached facility|shipment has left|left facility|connection|dispatched)\b/;
-  if(movement.test(all))return 2;
+  if(movement.test(latest))return 2;
   return 1;
 }
 function countryFlag(place){
