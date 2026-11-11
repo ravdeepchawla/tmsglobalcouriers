@@ -534,3 +534,14 @@ footer a:hover{color:var(--tms-yellow)}
 @media(max-width:600px){
  .trk-flag img{max-width:40px;max-height:36px}
 }
+
+
+/* Stage-specific tracking progress: booked green, transit yellow, hold red, delivered green */
+.trk-steps.trk-stage-booked li.now span,
+.trk-steps.trk-stage-delivered li.now span{background:#198754!important}
+.trk-steps.trk-stage-booked li.now,
+.trk-steps.trk-stage-delivered li.now{color:#198754!important}
+.trk-steps.trk-stage-transit li.now span{background:#F9C013!important}
+.trk-steps.trk-stage-transit li.now{color:#8a6500!important}
+.trk-steps.trk-stage-hold li.now span{background:#CC2127!important}
+.trk-steps.trk-stage-hold li.now{color:#CC2127!important}
