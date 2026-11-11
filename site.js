@@ -61,7 +61,18 @@ async function calculate(){const d=await post("/api/calculate-weight",getWeightD
 async function getQuote(){const d=await post("/api/quote",{...getWeightData(),destination:destination.value,carrier:qcarrier.value,service:"International Express"});quoteResult.innerHTML=d.found?`<div class="result"><b>Estimated freight: ₹${d.estimatedFreight.toLocaleString("en-IN")}</b><br><small>${d.chargeableWeight.toFixed(2)} kg chargeable · ${d.carrier} · ${d.destination}</small></div>`:`<div class="result">${d.message}</div>`}
 function fmtDate(s){const d=new Date(String(s).replace(" ","T"));return isNaN(d)?s:d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}
 function fmtTime(s){const d=new Date(String(s).replace(" ","T"));return isNaN(d)?"":d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}
-function trackStage(d){const st=String(d.status).toLowerCase();if(/deliver/.test(st)&&!/undeliver|out for|not deliver/.test(st))return 3;if(/\b(on hold|hold|held|exception|shipment delayed|clearance delay)\b/.test(st))return 4;return d.events.length?2:1}
+function trackStage(d){
+  const st=String(d.status||"").toLowerCase();
+  const events=(d.events||[]).map(e=>String(e.title||"").toLowerCase());
+  const all=[st,...events].join(" | ");
+  if(/deliver/.test(st)&&!/undeliver|out for|not deliver/.test(st))return 3;
+  if(/\\b(on hold|hold|held|exception|shipment delayed|clearance delay)\\b/.test(st))return 4;
+  if(/\\b(delivered|proof of delivery)\\b/.test(all)&&!/undeliver|out for|not deliver/.test(all))return 3;
+  if(/\\b(on hold|held by customs|clearance delay|shipment exception|delivery exception|delayed)\\b/.test(all))return 4;
+  const movement=/\\b(picked up|collected|accepted at|received at|processed at|arrived at|departed|in transit|on the way|out for delivery|handed over|forwarded|customs clearance|clearance process|reached facility|shipment has left|left facility|connection|dispatched)\\b/;
+  if(movement.test(all))return 2;
+  return 1;
+}
 function countryFlag(place){
   const s=String(place||"").toLowerCase();
   const countries=[
