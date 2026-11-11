@@ -526,3 +526,11 @@ footer a:hover{color:var(--tms-yellow)}
  .trk-route-divider{display:none}
  .trk-route-point{padding:2px 0}
 }
+
+
+/* Use image-based flags so they render consistently on Windows, Android and iOS */
+.trk-flag{overflow:hidden}
+.trk-flag img{display:block;width:100%;height:100%;max-width:58px;max-height:46px;object-fit:cover;border-radius:8px}
+@media(max-width:600px){
+ .trk-flag img{max-width:40px;max-height:36px}
+}
