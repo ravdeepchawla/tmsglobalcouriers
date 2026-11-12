@@ -95,7 +95,7 @@ document.addEventListener("click",function(e){
   else if(href.startsWith("tel:"))tmsAnalytics("phone_contact_click");
   else if(href.startsWith("mailto:"))tmsAnalytics("email_contact_click");
 });
-function track(awbOverride){
+async function track(awbOverride){
   const awb={value:(awbOverride||document.getElementById("hAwb")?.value||"").trim()};
   const trackResult=document.getElementById("trackResult");
   trackResult.closest(".visual")?.classList.add("has-tracking-result");
