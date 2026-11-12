@@ -567,3 +567,34 @@ footer a:hover{color:var(--tms-yellow)}
  .brand-wordmark strong{font-size:17px}
  .brand-wordmark small{font-size:7px;letter-spacing:.35px}
 }
+
+
+/* Header branding refined to match the approved wide reference */
+.nav{height:104px}
+.nav .brand-lockup{gap:18px}
+.nav .brand-lockup img{height:88px;max-width:142px;width:auto;object-fit:contain}
+.brand-wordmark{border-left:2px solid #111;padding-left:20px;gap:9px}
+.brand-wordmark strong{display:block;font-size:clamp(30px,3.2vw,46px);line-height:.98;letter-spacing:1.1px;font-weight:950;color:#000}
+.brand-wordmark .brand-tms{color:#CC2127}
+.brand-wordmark .brand-global{color:#000}
+.brand-wordmark small{
+ display:inline-block;background:#F9C013;color:#000;
+ padding:7px 13px;border-radius:2px;
+ font-size:clamp(10px,1vw,14px);line-height:1.1;
+ letter-spacing:1.1px;font-weight:900;white-space:nowrap
+}
+@media(max-width:850px){
+ .nav{height:75px}
+ .nav .brand-lockup{gap:10px}
+ .nav .brand-lockup img{height:62px;max-width:92px}
+ .brand-wordmark{padding-left:11px;gap:5px}
+ .brand-wordmark strong{font-size:clamp(21px,5vw,29px);letter-spacing:.45px}
+ .brand-wordmark small{font-size:clamp(7px,1.8vw,9px);padding:5px 7px;letter-spacing:.45px}
+}
+@media(max-width:390px){
+ .nav .brand-lockup{gap:7px}
+ .nav .brand-lockup img{height:54px;max-width:76px}
+ .brand-wordmark{padding-left:8px;gap:4px}
+ .brand-wordmark strong{font-size:20px;letter-spacing:.2px}
+ .brand-wordmark small{font-size:7px;padding:4px 5px;letter-spacing:.15px}
+}
