@@ -84,13 +84,26 @@ function countryFlag(place){
   const hit=countries.find(([re])=>re.test(s));return hit?hit[1]:"";
 }
 function toggleHistory(b){const box=b.previousElementSibling;box.classList.toggle("open");b.textContent=box.classList.contains("open")?"Show less":"Show full history"}
-async function track(awbOverride){
+async function tmsAnalytics(event,properties){
+  try{if(window.posthog&&typeof window.posthog.capture==="function")window.posthog.capture(event,properties||{})}catch(e){}
+}
+document.addEventListener("click",function(e){
+  const a=e.target.closest("a");
+  if(!a)return;
+  const href=(a.getAttribute("href")||"").toLowerCase();
+  if(href.startsWith("https://wa.me")||href.includes("whatsapp"))tmsAnalytics("whatsapp_contact_click");
+  else if(href.startsWith("tel:"))tmsAnalytics("phone_contact_click");
+  else if(href.startsWith("mailto:"))tmsAnalytics("email_contact_click");
+});
+function track(awbOverride){
   const awb={value:(awbOverride||document.getElementById("hAwb")?.value||"").trim()};
   const trackResult=document.getElementById("trackResult");
   trackResult.closest(".visual")?.classList.add("has-tracking-result");
   trackResult.innerHTML='<div class="result">Looking up shipment…</div>';
+  tmsAnalytics("shipment_tracking_search");
   const d=await post("/api/track",{awb:awb.value.trim()});
-  if(d.error){trackResult.innerHTML=`<div class="result trk-err">${esc(d.error)}</div>`;return}
+  if(d.error){tmsAnalytics("shipment_tracking_result",{result:"error"});trackResult.innerHTML=`<div class="result trk-err">${esc(d.error)}</div>`;return}
+  tmsAnalytics("shipment_tracking_result",{result:"success"});
   const stage=trackStage(d),done=stage===3,held=stage===4,statusTone=done?"delivered":held?"hold":stage===2?"transit":"booked";
   const steps=["Booked","In transit","Delivered"].map((n,i)=>{const cls=held?(i===0?"done":i===1?"now hold":""):i+1<stage||done?"done":i+1===stage?"now":"";return `<li class="${cls}"><span></span>${n}</li>`}).join("");
   const originName=[d.origin_city,d.origin].filter(Boolean).join(", "),destinationName=[d.destination_city,d.destination].filter(Boolean).join(", ");const route=originName||destinationName?`<div class="trk-route">${originName?`<div class="trk-route-point"><span class="trk-flag" aria-hidden="true">${countryFlag(d.origin)?`<img src="https://flagcdn.com/w80/${countryFlag(d.origin)}.png" alt="${esc(d.origin)} flag" loading="lazy">`:"🌐"}</span><div><small>ORIGIN</small><b>${esc(originName||d.origin)}</b></div></div>`:""}<span class="trk-route-divider" aria-hidden="true"></span>${destinationName?`<div class="trk-route-point"><span class="trk-flag" aria-hidden="true">${countryFlag(d.destination)?`<img src="https://flagcdn.com/w80/${countryFlag(d.destination)}.png" alt="${esc(d.destination)} flag" loading="lazy">`:"🌐"}</span><div><small>DESTINATION</small><b>${esc(destinationName||d.destination)}</b></div></div>`:""}</div>`:"";const facts=[["Booked",d.booked&&fmtDate(d.booked)],[done?"Delivered":"Expected",done?d.delivered_at&&fmtDate(d.delivered_at):d.expected_delivery&&fmtDate(d.expected_delivery)],["Service",d.carrier],["Pieces",d.pieces]].filter(x=>String(x[0]).toLowerCase()!=="weight"&&x[1]).map(x=>`<div><small>${x[0]}</small><b>${esc(x[1])}</b></div>`).join("");
