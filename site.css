@@ -545,3 +545,25 @@ footer a:hover{color:var(--tms-yellow)}
 .trk-steps.trk-stage-transit li.now{color:#8a6500!important}
 .trk-steps.trk-stage-hold li.now span{background:#CC2127!important}
 .trk-steps.trk-stage-hold li.now{color:#CC2127!important}
+
+/* TMS GLOBAL header wordmark beside the original mascot logo */
+.nav .brand-lockup{display:flex;align-items:center;gap:15px;min-width:0;text-decoration:none;flex-shrink:0}
+.nav .brand-lockup img{height:62px;width:auto;max-width:92px;object-fit:contain;display:block}
+.brand-wordmark{display:flex;flex-direction:column;gap:5px;min-width:0;border-left:2px solid #CC2127;padding-left:15px}
+.brand-wordmark strong{font-size:clamp(19px,2vw,27px);line-height:1;font-weight:900;letter-spacing:1.1px;color:#000;white-space:nowrap}
+.brand-wordmark small{font-size:clamp(8px,.85vw,11px);line-height:1.2;letter-spacing:1.15px;font-weight:800;color:#000;white-space:nowrap}
+.brand-wordmark strong::first-letter{color:#CC2127}
+@media(max-width:850px){
+ .nav .brand-lockup{gap:10px}
+ .nav .brand-lockup img{height:53px;max-width:78px}
+ .brand-wordmark{padding-left:10px;gap:4px}
+ .brand-wordmark strong{font-size:21px;letter-spacing:.7px}
+ .brand-wordmark small{font-size:8px;letter-spacing:.65px}
+}
+@media(max-width:390px){
+ .nav .brand-lockup{gap:7px}
+ .nav .brand-lockup img{height:46px;max-width:66px}
+ .brand-wordmark{padding-left:8px}
+ .brand-wordmark strong{font-size:17px}
+ .brand-wordmark small{font-size:7px;letter-spacing:.35px}
+}
